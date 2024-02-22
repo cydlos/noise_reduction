@@ -7,4 +7,8 @@ sr, data = wav.read(file)
 fl = 400
 frames = []
 for i in range(0, int (len(data)/fl)):
-    frames.append(data[i*fl:(i+1)*fl])
+    arr = np.array(data[i*fl:(i+1)*fl])
+    frames.append(arr)
+frames = np.array(frames)
+ham_window = np.hamming(fl)
+windowed_frames = frames*ham_window
