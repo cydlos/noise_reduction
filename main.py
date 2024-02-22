@@ -12,3 +12,11 @@ for i in range(0, int (len(data)/fl)):
 frames = np.array(frames)
 ham_window = np.hamming(fl)
 windowed_frames = frames*ham_window
+dft = []
+
+for i in windowed_frames:
+    dft.append(np.abs(np.fft.fft(i)))
+
+dft = np.array(dft)
+dft.mag_spec = np.abs(dft)
+dft_phase_spect = np.angle
