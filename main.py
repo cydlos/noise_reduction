@@ -19,4 +19,6 @@ for i in windowed_frames:
 
 dft = np.array(dft)
 dft.mag_spec = np.abs(dft)
-dft_phase_spect = np.angle
+dft_phase_spec = np.angle
+noise_estimate = np.mean(dft.mag_spec, axis=0)
+noise_estimate_mag = np.abs(noise_estimate, axis=0)
