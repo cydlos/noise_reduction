@@ -18,7 +18,17 @@ for i in windowed_frames:
     dft.append(np.abs(np.fft.fft(i)))
 
 dft = np.array(dft)
-dft.mag_spec = np.abs(dft)
+dft_mag_spec = np.abs(dft)
 dft_phase_spec = np.angle
 noise_estimate = np.mean(dft.mag_spec, axis=0)
-noise_estimate_mag = np.abs(noise_estimate, axis=0)
+noise_estimate_mag = np.abs(noise_estimate)
+estimate_mag = (dft_mag_spec - 2*noise_estimate_mag)
+estimate_mag[estimate_mag < 0] = 0
+estimate = estimate_mag * np.exp(1j*dft_phase_spec)
+ift = []
+
+for i in estimate:
+    ift.append(np.fft.ifft(i))
+
+clean_data = []
+clean_data.extend(ift[0][:int(fl/2)])
