@@ -1,3 +1,4 @@
+import os
 import scipy.io.wavfile as wav
 import numpy as np
 import matplotlib.pyplot as plt
@@ -39,3 +40,12 @@ for i in range(1, len(ift) - 1):
     clean_data = np.array(clean_data)
 
 fig = plt.figure(figsize=(8, 5))
+ax = fig.add_subplot(1,1,1)
+ax.plot(np.linspace(0,64000,64000),data,label='Original',color='orange')
+ax.plot(np.linspace(0,64000,64000),clean_data,label='Filtered',color='purple')
+ax.legend(fontsize=12)
+ax.set_title('Spectral Subtraction Method',fontsize=15)
+filename = os.path.basename(file)
+cleaned_file = '(Filtered_Audio)'+filename
+wav.write(cleaned_file, sr, clean_data.astype(np.int16))
+plt.savefig(filename+'(Spectral Subtraction graph).jpg')
